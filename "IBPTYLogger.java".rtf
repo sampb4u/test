@@ -1,0 +1,76 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 package com.bwinparty.utils.logger;\
+\
+import java.util.Map;\
+\
+public abstract interface IBPTYLogger extends IBPTYLogConstants\
+\{\
+  public abstract IBPTYLogger addProperty(String paramString1, String paramString2);\
+\
+  public abstract IBPTYLogger addNonIndexProperty(String paramString1, String paramString2);\
+\
+  public abstract IBPTYLogger addProperty(String paramString, long paramLong);\
+\
+  public abstract IBPTYLogger addContext(IBPTYLogContext paramIBPTYLogContext);\
+\
+  public abstract IBPTYLogger addContext(Map<String, Object> paramMap);\
+\
+  public abstract IBPTYLogger removeProperty(String paramString);\
+\
+  public abstract void debug(Object paramObject);\
+\
+  public abstract void debug(String paramString, Object paramObject);\
+\
+  public abstract void error(Object paramObject);\
+\
+  public abstract void error(Object paramObject, Throwable paramThrowable);\
+\
+  public abstract void error(String paramString, Object paramObject, Throwable paramThrowable);\
+\
+  public abstract void info(Object paramObject);\
+\
+  public abstract void info(String paramString, Object paramObject);\
+\
+  public abstract void warn(Object paramObject);\
+\
+  public abstract void warn(Object paramObject, Throwable paramThrowable);\
+\
+  public abstract void warn(String paramString, Object paramObject, Throwable paramThrowable);\
+\
+  public abstract void trace(Object paramObject);\
+\
+  public abstract void trace(String paramString, Object paramObject);\
+\
+  public abstract void fatal(Object paramObject);\
+\
+  public abstract void fatal(Object paramObject, Throwable paramThrowable);\
+\
+  public abstract void fatal(String paramString, Object paramObject, Throwable paramThrowable);\
+\
+  public abstract boolean isDebugEnabled();\
+\
+  public abstract boolean isInfoEnabled();\
+\
+  public abstract boolean isTraceEnabled();\
+\
+  public abstract IBPTYLogger startTimer();\
+\
+  public abstract IBPTYLogger startStep();\
+\
+  public abstract void endStep(String paramString);\
+\
+  public abstract void endStep(String paramString, int paramInt);\
+\
+  public abstract void endTimer(Object paramObject, int paramInt);\
+\
+  public abstract void endTimer(Object paramObject);\
+\
+  public abstract void logCount(long paramLong);\
+\
+  public abstract void logCount(String paramString, long paramLong);\
+\}}

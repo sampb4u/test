@@ -1,0 +1,97 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 package com.bwinparty.utils.logger.layout;\
+\
+import com.bwinparty.utils.logger.impl.BPTYLogEntry;\
+import com.bwinparty.utils.logger.impl.BPTYMetricEntry;\
+import com.google.gson.Gson;\
+import com.google.gson.GsonBuilder;\
+import org.apache.log4j.Layout;\
+import org.apache.log4j.PatternLayout;\
+import org.apache.log4j.lf5.LogLevel;\
+import org.apache.log4j.spi.LoggingEvent;\
+\
+public class BPTYJsonLayout extends PatternLayout\
+\{\
+  private final Gson jsonBuilder = new GsonBuilder().create();\
+  private String environment;\
+  private String host;\
+  private String appName;\
+  private String appVersion;\
+\
+  public void activateOptions()\
+  \{\
+  \}\
+\
+  public String format(LoggingEvent event)\
+  \{\
+    Object obj = null;\
+    try\
+    \{\
+      if (BPTYLogEntry.class.isInstance(event.getMessage())) \{\
+        BPTYLogEntry le = (BPTYLogEntry)event.getMessage();\
+        le.setAppEnvProperties(this.environment, this.host, this.appName, this.appVersion);\
+        le.setInternalProperties(event);\
+        obj = le;\
+      \}\
+      else if (BPTYMetricEntry.class.isInstance(event.getMessage())) \{\
+        BPTYMetricEntry le = (BPTYMetricEntry)event.getMessage();\
+        le.setAppEnvProperties(this.environment, this.host, this.appName, this.appVersion);\
+        le.setInternalProperties(event);\
+        obj = le;\
+      \}\
+      else\
+      \{\
+        BPTYLogEntry le = BPTYLogEntry.getLegacyEntry();\
+        le.setAppEnvProperties(this.environment, this.host, this.appName, this.appVersion);\
+        le.setInternalProperties(event);\
+\
+        if (event.getMessage() != null) \{\
+          le.setEntry(null, null, event.getMessage().toString(), null);\
+        \}\
+        obj = le;\
+      \}\
+\
+    \}\
+    catch (Throwable t)\
+    \{\
+      BPTYLogEntry le = BPTYLogEntry.getLegacyEntry();\
+      le.setBasicProperties(LogLevel.WARN, getClass().getCanonicalName());\
+\
+      String msg = "Error caught in Layout.format(): " + t.toString() + Layout.LINE_SEP;\
+      le.setEntry("", msg + super.format(event));\
+      obj = le;\
+    \}\
+\
+    return this.jsonBuilder.toJson(obj) + Layout.LINE_SEP;\
+  \}\
+\
+  public boolean ignoresThrowable()\
+  \{\
+    return false;\
+  \}\
+\
+  public void setEnvironment(String env)\
+  \{\
+    this.environment = env;\
+  \}\
+\
+  public void setHost(String host)\
+  \{\
+    this.host = host;\
+  \}\
+\
+  public void setAppName(String appName)\
+  \{\
+    this.appName = appName;\
+  \}\
+\
+  public void setAppVersion(String appVersion)\
+  \{\
+    this.appVersion = appVersion;\
+  \}\
+\}}
